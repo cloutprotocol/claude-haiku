@@ -6,41 +6,43 @@ on:
 
 permissions:
   contents: read
-  pages: write
-  id-token: write
   pull-requests: write
+  deployments: write
 
 jobs:
   deploy:
-    environment:
-      name: github-pages
-      url: ${{ steps.deployment.outputs.page_url }}
     runs-on: ubuntu-latest
+    environment:
+      name: pr-preview
+      url: ${{ steps.deployment.outputs.preview_url }}
     steps:
-      - name: Checkout
-        uses: actions/checkout@v4
-      - name: Setup Pages
-        uses: actions/configure-pages@v4
-      - name: Upload artifact
-        uses: actions/upload-pages-artifact@v2
-        with:
-          path: '.'
-      - name: Deploy to GitHub Pages
+      - uses: actions/checkout@v4
+      
+      - name: Create Deployment
         id: deployment
-        uses: actions/deploy-pages@v3
-      - name: Add Deploy Preview Comment
-        uses: actions/github-script@v7
+        uses: bobheadxi/deployments@v1
         with:
-          script: |
-            const url = process.env.DEPLOYMENT_URL
-            const message = `🚀 Deploy Preview for this PR is ready!
-            
-            Preview: ${url}`
-            github.rest.issues.createComment({
-              issue_number: context.issue.number,
-              owner: context.repo.owner,
-              repo: context.repo.repo,
-              body: message
-            })
-        env:
-          DEPLOYMENT_URL: ${{ steps.deployment.outputs.page_url }}
+          step: start
+          token: ${{ secrets.GITHUB_TOKEN }}
+          env: pr-preview
+          ref: ${{ github.head_ref }}
+          no_override: false
+
+      - name: Deploy Branch Preview
+        id: deploy
+        uses: JamesIves/github-pages-deploy-action@v4
+        with:
+          branch: gh-pages
+          folder: .
+          target-folder: pr-${{ github.event.pull_request.number }}
+
+      - name: Update Deployment Status
+        uses: bobheadxi/deployments@v1
+        if: always()
+        with:
+          step: finish
+          token: ${{ secrets.GITHUB_TOKEN }}
+          status: ${{ job.status }}
+          env: pr-preview
+          deployment_id: ${{ steps.deployment.outputs.deployment_id }}
+          env_url: https://${{ github.repository_owner }}.github.io/claude-haiku/pr-${{ github.event.pull_request.number }}/
