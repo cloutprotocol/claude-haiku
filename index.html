@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>☆彡 デジタル俳句 - Digital Haiku ☆彡</title>
+    <style>
+        body {
+            background-color: #FFD1DC;
+            margin: 0;
+            padding: 20px;
+            font-family: "MS PGothic", "Osaka", sans-serif;
+            background-image: url("data:image/gif;base64,R0lGODlhCgAKAIAAAP////8AAP///yH5BAAAAAAALAAAAAAKAAoAAAIRhI+py+0Po5y02ouz3rz7VwAAOw==");
+        }
+        .main-container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: rgba(255, 255, 255, 0.9);
+            border: 3px solid #FF69B4;
+            padding: 20px;
+            text-align: center;
+        }
+        h1 {
+            color: #FF1493;
+            text-shadow: 2px 2px 0 #000;
+            font-size: 36px;
+            margin-bottom: 30px;
+        }
+        .haiku {
+            font-size: 24px;
+            line-height: 1.6;
+            margin: 20px 0;
+            padding: 20px;
+            border: 2px dashed #FF69B4;
+            background: #FFF;
+        }
+        .marquee {
+            background: #000;
+            color: #FF0;
+            padding: 5px;
+            margin: 20px 0;
+        }
+        .blink {
+            animation: blink-animation 1s steps(5, start) infinite;
+        }
+        @keyframes blink-animation {
+            to {
+                visibility: hidden;
+            }
+        }
+        .counter {
+            margin-top: 20px;
+            font-family: "Courier New", monospace;
+            background: #000;
+            color: #0F0;
+            padding: 5px 10px;
+            display: inline-block;
+        }
+        footer {
+            margin-top: 30px;
+            font-size: 12px;
+            color: #FF69B4;
+        }
+    </style>
+</head>
+<body>
+    <div class="main-container">
+        <h1>☆彡 デジタル俳句 ☆彡</h1>
+        <div class="haiku">
+            春の風が<br>
+            スクリーンを通り<br>
+            夢を運ぶ<br>
+            <br>
+            <em>Spring breeze passes through<br>
+            Digital screens glowing soft<br>
+            Carrying our dreams</em>
+        </div>
+        <div class="marquee">
+            <span class="blink">★ Welcome to my Cyber俳句 Space! ★</span>
+        </div>
+        <div class="counter">Visitors: 000001</div>
+        <footer>
+            Made with ♥ in Neocities style - Last updated: 2024<br>
+            Best viewed in Netscape Navigator
+        </footer>
+    </div>
+</body>
+</html>
